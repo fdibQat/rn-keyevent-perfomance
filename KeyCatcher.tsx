@@ -8,7 +8,6 @@ import { RootState } from "./store";
 
 const KeyCatcher = () => {
   const testData = useSelector((state: RootState) => state.testData);
-  //console.log(testData);
 
   const [keyCode, setKeyCode] = useState("nothing has been pressed yet");
   const KEYBOARD_KEYS = {
@@ -51,8 +50,9 @@ const KeyCatcher = () => {
     return total;
   };
 
-  const saveData = () => {
+  const saveData = (calledFrom: string) => {
     console.log(">>> Save data started: <<<");
+    console.log("Called from:", calledFrom);
     const start = performance.now();
     const itemToAdd = {
       abc: 1,
@@ -106,7 +106,7 @@ const KeyCatcher = () => {
         setKeyCode(keyEvent.keyCode.toString());
         switch (keyEvent.keyCode) {
           case KEYBOARD_KEYS.f2:
-            saveData();
+            saveData("F2 Key pressed");
             break;
           default:
             break;
@@ -123,7 +123,7 @@ const KeyCatcher = () => {
       <Text>
         Key Code pressed: {keyCode} {testData[0].testItems.length}
       </Text>
-      <Button title="Save this" onPress={saveData} />
+      <Button title="Save this" onPress={() => saveData("Button onPress")} />
     </View>
   );
 };
